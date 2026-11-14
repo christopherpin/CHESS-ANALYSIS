@@ -209,7 +209,7 @@ function renderReport(out, rep, games) {
   out.innerHTML = h;
   out.onclick = e => {
     const d = e.target.dataset;
-    if (d.drill) { nav.setTab("drills"); nav.popToRoot(); setTimeout(() => nav.push(drillIntro("theme", d.drill)), 50); }
+    if (d.drill) { nav.setTab("drills"); nav.popToRoot(); setTimeout(() => nav.push(drillIntro("theme", d.drill, "mine")), 50); }
     if (d.key) { const g = byKey.get(d.key); if (g) nav.push(viewerPage(g, { ply: +d.ply + 1 })); }
   };
 }
@@ -346,12 +346,12 @@ const RANGES = [
   { k: "a", name: "Advanced", f: () => [1600, 2100] },
   { k: "e", name: "Expert", f: () => [2100, 3200] },
 ];
-function drillIntro(kind, key) {
+function drillIntro(kind, key, forceRange) {
   const d = kind === "theme" ? DRILLS[key] : { name: prettyOpening(key), blurb: "Tactics from this opening", lesson: `Every puzzle here comes from a real game that opened with the ${prettyOpening(key)}. You'll start to recognise the typical traps and tactical ideas of the structure.` };
   return { title: d.name, short: "Drill",
     render(el) {
       const defLvl = d.lvl ? ["b", "i", "a"][d.lvl - 1] : "mine";
-      let rk = pref.get(`range:${kind}:${key}`, defLvl);
+      let rk = forceRange || pref.get(`range:${kind}:${key}`, defLvl);
       el.innerHTML = `<div class="prose"><h3>${esc(d.name)}</h3><p>${esc(d.blurb)}</p><p>${esc(d.lesson)}</p></div>
         ${sec("Difficulty")}<div class="seg">${RANGES.map(r => `<div data-r="${r.k}" class="${r.k === rk ? "on" : ""}">${r.name.replace("Intermediate", "Inter.")}</div>`).join("")}</div>
         <div class="note rng"></div><button class="btn green start">Start drill</button>

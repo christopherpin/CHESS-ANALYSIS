@@ -48,7 +48,7 @@ export async function byGroup(kind, name, lo, hi, avoid) {
 
 /** Your puzzle rating. Starts from the rating you set (e.g. your chess.com puzzle rating). */
 export const rating = {
-  get() { return pref.get("prating", { r: 1200, n: 0, hist: [] }); },
+  get() { return pref.get("prating", { r: 1400, n: 0, hist: [] }); },
   update(puzzleRating, won) {
     const s = this.get();
     const k = s.n < 20 ? 40 : s.n < 60 ? 24 : 16;
