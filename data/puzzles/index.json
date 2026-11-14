@@ -1,0 +1,776 @@
+{
+ "source": "Lichess open puzzle database (CC0), database.lichess.org",
+ "scanned": 6193530,
+ "eligible": 3795477,
+ "rating": {
+  "400": 2500,
+  "500": 2500,
+  "600": 2500,
+  "700": 2500,
+  "800": 2500,
+  "900": 2500,
+  "1000": 2500,
+  "1100": 2500,
+  "1200": 2500,
+  "1300": 2500,
+  "1400": 2500,
+  "1500": 2500,
+  "1600": 2500,
+  "1700": 2500,
+  "1800": 2500,
+  "1900": 2500,
+  "2000": 2500,
+  "2100": 2500,
+  "2200": 2500,
+  "2300": 2500,
+  "2400": 2500,
+  "2500": 2500,
+  "2600": 2500,
+  "2700": 2500,
+  "2800": 2500,
+  "2900": 2500,
+  "3000": 475
+ },
+ "theme": {
+  "hangingPiece": {
+   "n": 3324,
+   "min": 399,
+   "max": 3079,
+   "available": 135620
+  },
+  "middlegame": {
+   "n": 3680,
+   "min": 399,
+   "max": 3271,
+   "available": 1727454
+  },
+  "endgame": {
+   "n": 3750,
+   "min": 399,
+   "max": 3174,
+   "available": 1870078
+  },
+  "rookEndgame": {
+   "n": 3528,
+   "min": 399,
+   "max": 3156,
+   "available": 200176
+  },
+  "fork": {
+   "n": 3280,
+   "min": 399,
+   "max": 3124,
+   "available": 517473
+  },
+  "mate": {
+   "n": 3303,
+   "min": 399,
+   "max": 3003,
+   "available": 1148068
+  },
+  "mateIn2": {
+   "n": 2978,
+   "min": 399,
+   "max": 2682,
+   "available": 494438
+  },
+  "operaMate": {
+   "n": 2697,
+   "min": 399,
+   "max": 2751,
+   "available": 37467
+  },
+  "interference": {
+   "n": 2598,
+   "min": 558,
+   "max": 3029,
+   "available": 15098
+  },
+  "kingsideAttack": {
+   "n": 3519,
+   "min": 399,
+   "max": 3153,
+   "available": 325922
+  },
+  "exposedKing": {
+   "n": 3043,
+   "min": 406,
+   "max": 3176,
+   "available": 122560
+  },
+  "skewer": {
+   "n": 3095,
+   "min": 444,
+   "max": 3048,
+   "available": 90089
+  },
+  "mateIn1": {
+   "n": 2538,
+   "min": 399,
+   "max": 2485,
+   "available": 482690
+  },
+  "opening": {
+   "n": 3211,
+   "min": 399,
+   "max": 3046,
+   "available": 197945
+  },
+  "discoveredAttack": {
+   "n": 3270,
+   "min": 400,
+   "max": 3126,
+   "available": 210910
+  },
+  "sacrifice": {
+   "n": 3316,
+   "min": 399,
+   "max": 3126,
+   "available": 312169
+  },
+  "quietMove": {
+   "n": 3419,
+   "min": 400,
+   "max": 3176,
+   "available": 144339
+  },
+  "bishopEndgame": {
+   "n": 3278,
+   "min": 399,
+   "max": 3134,
+   "available": 52130
+  },
+  "deflection": {
+   "n": 3070,
+   "min": 441,
+   "max": 3087,
+   "available": 181524
+  },
+  "pin": {
+   "n": 3192,
+   "min": 399,
+   "max": 3271,
+   "available": 244605
+  },
+  "morphysMate": {
+   "n": 2084,
+   "min": 437,
+   "max": 2826,
+   "available": 4932
+  },
+  "smotheredMate": {
+   "n": 1735,
+   "min": 400,
+   "max": 2607,
+   "available": 15485
+  },
+  "advancedPawn": {
+   "n": 3324,
+   "min": 399,
+   "max": 3157,
+   "available": 246129
+  },
+  "attraction": {
+   "n": 3056,
+   "min": 400,
+   "max": 3126,
+   "available": 159411
+  },
+  "promotion": {
+   "n": 3271,
+   "min": 399,
+   "max": 3157,
+   "available": 95555
+  },
+  "mateIn3": {
+   "n": 2853,
+   "min": 399,
+   "max": 2841,
+   "available": 142101
+  },
+  "cornerMate": {
+   "n": 2174,
+   "min": 401,
+   "max": 2800,
+   "available": 7511
+  },
+  "defensiveMove": {
+   "n": 3219,
+   "min": 445,
+   "max": 3174,
+   "available": 213914
+  },
+  "backRankMate": {
+   "n": 2648,
+   "min": 399,
+   "max": 2679,
+   "available": 96992
+  },
+  "queenEndgame": {
+   "n": 3228,
+   "min": 399,
+   "max": 3032,
+   "available": 45269
+  },
+  "queenRookEndgame": {
+   "n": 3127,
+   "min": 399,
+   "max": 3033,
+   "available": 26022
+  },
+  "clearance": {
+   "n": 2976,
+   "min": 458,
+   "max": 3118,
+   "available": 51522
+  },
+  "enPassant": {
+   "n": 1945,
+   "min": 795,
+   "max": 3108,
+   "available": 5359
+  },
+  "pawnEndgame": {
+   "n": 3291,
+   "min": 400,
+   "max": 3108,
+   "available": 143546
+  },
+  "knightEndgame": {
+   "n": 3268,
+   "min": 399,
+   "max": 3157,
+   "available": 31554
+  },
+  "queensideAttack": {
+   "n": 3131,
+   "min": 399,
+   "max": 3023,
+   "available": 58682
+  },
+  "pillsburysMate": {
+   "n": 2760,
+   "min": 399,
+   "max": 2921,
+   "available": 37543
+  },
+  "attackingF2F7": {
+   "n": 3037,
+   "min": 399,
+   "max": 2941,
+   "available": 29226
+  },
+  "trappedPiece": {
+   "n": 2642,
+   "min": 527,
+   "max": 3009,
+   "available": 47350
+  },
+  "hookMate": {
+   "n": 2045,
+   "min": 413,
+   "max": 2695,
+   "available": 7601
+  },
+  "intermezzo": {
+   "n": 2676,
+   "min": 730,
+   "max": 3128,
+   "available": 49089
+  },
+  "discoveredCheck": {
+   "n": 3077,
+   "min": 418,
+   "max": 3176,
+   "available": 74766
+  },
+  "capturingDefender": {
+   "n": 2606,
+   "min": 478,
+   "max": 2987,
+   "available": 29057
+  },
+  "swallowstailMate": {
+   "n": 2141,
+   "min": 402,
+   "max": 2709,
+   "available": 5674
+  },
+  "doubleCheck": {
+   "n": 2884,
+   "min": 418,
+   "max": 3176,
+   "available": 23267
+  },
+  "arabianMate": {
+   "n": 2122,
+   "min": 405,
+   "max": 2901,
+   "available": 5628
+  },
+  "zugzwang": {
+   "n": 3071,
+   "min": 400,
+   "max": 3109,
+   "available": 40370
+  },
+  "mateIn4": {
+   "n": 2548,
+   "min": 400,
+   "max": 2901,
+   "available": 23288
+  },
+  "epauletteMate": {
+   "n": 2539,
+   "min": 399,
+   "max": 2803,
+   "available": 14586
+  },
+  "vukovicMate": {
+   "n": 1552,
+   "min": 425,
+   "max": 2751,
+   "available": 2021
+  },
+  "dovetailMate": {
+   "n": 1680,
+   "min": 618,
+   "max": 2841,
+   "available": 3232
+  },
+  "triangleMate": {
+   "n": 1889,
+   "min": 547,
+   "max": 2775,
+   "available": 5684
+  },
+  "balestraMate": {
+   "n": 1152,
+   "min": 655,
+   "max": 2826,
+   "available": 1152
+  },
+  "killBoxMate": {
+   "n": 2109,
+   "min": 412,
+   "max": 2865,
+   "available": 4044
+  },
+  "xRayAttack": {
+   "n": 2577,
+   "min": 527,
+   "max": 3153,
+   "available": 15677
+  },
+  "anastasiaMate": {
+   "n": 1874,
+   "min": 426,
+   "max": 2630,
+   "available": 5693
+  },
+  "blindSwineMate": {
+   "n": 1768,
+   "min": 548,
+   "max": 2789,
+   "available": 4588
+  },
+  "collinearMove": {
+   "n": 2319,
+   "min": 767,
+   "max": 3027,
+   "available": 4878
+  },
+  "bodenMate": {
+   "n": 1558,
+   "min": 399,
+   "max": 2372,
+   "available": 2642
+  },
+  "doubleBishopMate": {
+   "n": 1124,
+   "min": 399,
+   "max": 2583,
+   "available": 2491
+  },
+  "mateIn5": {
+   "n": 2200,
+   "min": 887,
+   "max": 3003,
+   "available": 5552
+  },
+  "castling": {
+   "n": 1365,
+   "min": 904,
+   "max": 3009,
+   "available": 1614
+  },
+  "underPromotion": {
+   "n": 924,
+   "min": 665,
+   "max": 2941,
+   "available": 924
+  }
+ },
+ "opening": {
+  "Kings_Pawn_Game": {
+   "n": 2273,
+   "min": 399,
+   "max": 2911,
+   "available": 10942
+  },
+  "Horwitz_Defense": {
+   "n": 2142,
+   "min": 399,
+   "max": 2947,
+   "available": 6083
+  },
+  "Scandinavian_Defense": {
+   "n": 2458,
+   "min": 399,
+   "max": 2950,
+   "available": 34696
+  },
+  "Scotch_Game": {
+   "n": 2392,
+   "min": 399,
+   "max": 3066,
+   "available": 22188
+  },
+  "Alekhine_Defense": {
+   "n": 2196,
+   "min": 399,
+   "max": 3050,
+   "available": 7294
+  },
+  "Sicilian_Defense": {
+   "n": 2666,
+   "min": 399,
+   "max": 3087,
+   "available": 125308
+  },
+  "Ruy_Lopez": {
+   "n": 2430,
+   "min": 399,
+   "max": 2969,
+   "available": 23607
+  },
+  "Pirc_Defense": {
+   "n": 2314,
+   "min": 399,
+   "max": 2976,
+   "available": 11955
+  },
+  "Slav_Defense": {
+   "n": 2239,
+   "min": 399,
+   "max": 2909,
+   "available": 10393
+  },
+  "Caro-Kann_Defense": {
+   "n": 2473,
+   "min": 399,
+   "max": 3002,
+   "available": 45959
+  },
+  "Three_Knights_Opening": {
+   "n": 1921,
+   "min": 399,
+   "max": 2941,
+   "available": 3157
+  },
+  "Queens_Pawn_Game": {
+   "n": 2488,
+   "min": 399,
+   "max": 3017,
+   "available": 48604
+  },
+  "French_Defense": {
+   "n": 2513,
+   "min": 399,
+   "max": 3046,
+   "available": 52445
+  },
+  "Modern_Defense": {
+   "n": 2303,
+   "min": 399,
+   "max": 2944,
+   "available": 11706
+  },
+  "Russian_Game": {
+   "n": 2340,
+   "min": 399,
+   "max": 2997,
+   "available": 11986
+  },
+  "Kings_Gambit_Accepted": {
+   "n": 2380,
+   "min": 400,
+   "max": 3051,
+   "available": 12090
+  },
+  "English_Opening": {
+   "n": 2349,
+   "min": 399,
+   "max": 3003,
+   "available": 25461
+  },
+  "Italian_Game": {
+   "n": 2480,
+   "min": 399,
+   "max": 2978,
+   "available": 45159
+  },
+  "Philidor_Defense": {
+   "n": 2315,
+   "min": 399,
+   "max": 2993,
+   "available": 14470
+  },
+  "Ponziani_Opening": {
+   "n": 2014,
+   "min": 399,
+   "max": 3039,
+   "available": 3507
+  },
+  "Kings_Gambit": {
+   "n": 1708,
+   "min": 399,
+   "max": 2882,
+   "available": 2404
+  },
+  "Indian_Defense": {
+   "n": 2391,
+   "min": 399,
+   "max": 3025,
+   "available": 21760
+  },
+  "Dutch_Defense": {
+   "n": 2149,
+   "min": 399,
+   "max": 3023,
+   "available": 5534
+  },
+  "Queens_Gambit_Declined": {
+   "n": 2454,
+   "min": 399,
+   "max": 3009,
+   "available": 29322
+  },
+  "Polish_Opening": {
+   "n": 1901,
+   "min": 399,
+   "max": 2868,
+   "available": 2782
+  },
+  "Englund_Gambit_Declined": {
+   "n": 1495,
+   "min": 399,
+   "max": 2686,
+   "available": 1551
+  },
+  "Kings_Knight_Opening": {
+   "n": 1490,
+   "min": 400,
+   "max": 2905,
+   "available": 1624
+  },
+  "Grunfeld_Defense": {
+   "n": 1743,
+   "min": 400,
+   "max": 2857,
+   "available": 2563
+  },
+  "Nimzo-Larsen_Attack": {
+   "n": 2213,
+   "min": 399,
+   "max": 2936,
+   "available": 7601
+  },
+  "Englund_Gambit": {
+   "n": 2140,
+   "min": 399,
+   "max": 2939,
+   "available": 6290
+  },
+  "Bird_Opening": {
+   "n": 2177,
+   "min": 399,
+   "max": 2958,
+   "available": 6047
+  },
+  "Bishops_Opening": {
+   "n": 2282,
+   "min": 399,
+   "max": 2970,
+   "available": 10838
+  },
+  "Center_Game": {
+   "n": 2083,
+   "min": 400,
+   "max": 2932,
+   "available": 4264
+  },
+  "Zukertort_Opening": {
+   "n": 2305,
+   "min": 399,
+   "max": 2932,
+   "available": 12505
+  },
+  "English_Defense": {
+   "n": 1828,
+   "min": 399,
+   "max": 3046,
+   "available": 2509
+  },
+  "Queens_Gambit_Accepted": {
+   "n": 2213,
+   "min": 399,
+   "max": 2937,
+   "available": 7991
+  },
+  "Kings_Gambit_Declined": {
+   "n": 2200,
+   "min": 399,
+   "max": 2974,
+   "available": 6309
+  },
+  "Blackmar-Diemer_Gambit": {
+   "n": 1940,
+   "min": 399,
+   "max": 2873,
+   "available": 2974
+  },
+  "Four_Knights_Game": {
+   "n": 2312,
+   "min": 399,
+   "max": 2977,
+   "available": 11934
+  },
+  "Kings_Indian_Attack": {
+   "n": 1853,
+   "min": 405,
+   "max": 2816,
+   "available": 2781
+  },
+  "Nimzowitsch_Defense": {
+   "n": 2190,
+   "min": 399,
+   "max": 3103,
+   "available": 7691
+  },
+  "Rapport-Jobava_System": {
+   "n": 1867,
+   "min": 399,
+   "max": 2860,
+   "available": 2952
+  },
+  "Benoni_Defense": {
+   "n": 2219,
+   "min": 399,
+   "max": 2909,
+   "available": 7707
+  },
+  "Elephant_Gambit": {
+   "n": 2002,
+   "min": 399,
+   "max": 2861,
+   "available": 3405
+  },
+  "Grob_Opening": {
+   "n": 1636,
+   "min": 399,
+   "max": 2782,
+   "available": 2226
+  },
+  "Nimzo-Indian_Defense": {
+   "n": 2126,
+   "min": 399,
+   "max": 2902,
+   "available": 4695
+  },
+  "Vienna_Game": {
+   "n": 2329,
+   "min": 399,
+   "max": 2940,
+   "available": 11801
+  },
+  "Petrovs_Defense": {
+   "n": 2080,
+   "min": 399,
+   "max": 3010,
+   "available": 5400
+  },
+  "Owen_Defense": {
+   "n": 2156,
+   "min": 399,
+   "max": 2926,
+   "available": 5799
+  },
+  "Kings_Indian_Defense": {
+   "n": 2170,
+   "min": 399,
+   "max": 2974,
+   "available": 7533
+  },
+  "Englund_Gambit_Complex": {
+   "n": 1901,
+   "min": 399,
+   "max": 2926,
+   "available": 2892
+  },
+  "Van_Geet_Opening": {
+   "n": 1587,
+   "min": 400,
+   "max": 2893,
+   "available": 1837
+  },
+  "Hungarian_Opening": {
+   "n": 2029,
+   "min": 400,
+   "max": 2944,
+   "available": 3824
+  },
+  "Semi-Slav_Defense": {
+   "n": 2089,
+   "min": 399,
+   "max": 2968,
+   "available": 4108
+  },
+  "Danish_Gambit": {
+   "n": 1695,
+   "min": 399,
+   "max": 2914,
+   "available": 2031
+  },
+  "Vant_Kruijs_Opening": {
+   "n": 2058,
+   "min": 399,
+   "max": 2938,
+   "available": 4335
+  },
+  "Danish_Gambit_Accepted": {
+   "n": 1774,
+   "min": 399,
+   "max": 2879,
+   "available": 2126
+  },
+  "Catalan_Opening": {
+   "n": 1503,
+   "min": 425,
+   "max": 2796,
+   "available": 1556
+  },
+  "Trompowsky_Attack": {
+   "n": 1808,
+   "min": 399,
+   "max": 2851,
+   "available": 2605
+  },
+  "Rat_Defense": {
+   "n": 1818,
+   "min": 399,
+   "max": 2938,
+   "available": 2704
+  }
+ }
+}
