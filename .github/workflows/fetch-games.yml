@@ -1,0 +1,48 @@
+name: Fetch chess.com games
+# Saves a player's public chess.com games to games/<username>.pgn so they can be analyzed offline.
+on:
+  workflow_dispatch:
+    inputs:
+      username:
+        description: chess.com username
+        required: true
+      months:
+        description: how many recent months to fetch (0 = all)
+        default: "0"
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch
+        env:
+          USERNAME: ${{ inputs.username }}
+          MONTHS: ${{ inputs.months }}
+        run: |
+          user=$(echo "$USERNAME" | tr 'A-Z' 'a-z' | tr -cd 'a-z0-9_-')
+          mkdir -p games
+          UA="chess-trainer-app (github actions)"
+          curl -fsSL -A "$UA" "https://api.chess.com/pub/player/$user/games/archives" -o archives.json
+          curl -fsSL -A "$UA" "https://api.chess.com/pub/player/$user/stats" -o "games/$user.stats.json" || true
+          python3 - "$user" "$MONTHS" <<'PY'
+          import json, sys
+          urls = json.load(open("archives.json"))["archives"]
+          n = int(sys.argv[2] or 0)
+          if n > 0: urls = urls[-n:]
+          open("urls.txt", "w").write("\n".join(urls))
+          PY
+          : > "games/$user.pgn"
+          while read -r u; do
+            curl -fsSL -A "$UA" "$u/pgn" >> "games/$user.pgn"; printf '\n\n' >> "games/$user.pgn"; sleep 1
+          done < urls.txt
+          grep -c '^\[Event ' "games/$user.pgn" || true
+          rm archives.json urls.txt
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add games
+          git diff --cached --quiet || git commit -m "Fetch chess.com games for ${{ inputs.username }}"
+          git push
