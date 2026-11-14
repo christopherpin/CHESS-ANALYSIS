@@ -3,7 +3,7 @@
 A free, phone-friendly chess trainer styled to match the IPOD site. Live at
 https://christopherpin.github.io/CHESS-ANALYSIS/
 
-- **History**: imports your chess.com games (public API), reviews them with Stockfish in the browser,
+- **History**: "View Gameplay Analysis" shows the written report and a Refresh button that reviews new games and says whether each hole is improving, stagnating or getting worse. Also imports your chess.com games (public API), reviews them with Stockfish in the browser,
   and ranks the biggest holes in your game. Recent games, longer time controls and checkmate losses count most.
 - **Saved**: paste or open PGNs of your own games or games from books, and play through them with the engine.
 - **Drills**: tactical patterns by skill level, game phase, book opening, or mating pattern, each with

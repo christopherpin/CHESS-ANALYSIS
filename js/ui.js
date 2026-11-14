@@ -24,7 +24,7 @@ export function createNav({ root, tabs, initial }) {
     backEl.classList.toggle("hidden", !prev);
     if (prev) backEl.firstChild.textContent = prev.short || prev.title;
     btnEl.classList.toggle("hidden", !top.right);
-    if (top.right) { btnEl.textContent = top.right.label; btnEl.onclick = top.right.onClick; }
+    if (top.right) { btnEl.textContent = top.right.label; btnEl.onclick = top.right.onClick; btnEl.className = "navbtn " + (top.right.cls || ""); }
   }
   function place(page, cls, animate) {
     page.el.classList.toggle("still", !animate);

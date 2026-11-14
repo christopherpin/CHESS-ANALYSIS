@@ -3,7 +3,7 @@ import { puzzleScreen } from "./trainer.js";
 import { gameViewer } from "./viewer.js";
 import * as P from "./puzzles.js";
 import { DRILLS, LEVELS, PHASES, prettyOpening } from "./catalog.js";
-import { splitPgn, parseGame, gameMoves, timeControlName, reviewGame, buildReport, openingFamily } from "./analysis.js";
+import { splitPgn, parseGame, gameMoves, timeControlName, reviewGame, buildReport, openingFamily, MOTIFS } from "./analysis.js";
 import { pref, idb } from "./store.js";
 
 const DEFAULT_USER = "christopher_pin";
@@ -75,6 +75,7 @@ function gameRow(g, user, i) {
 function historyRoot() {
   return {
     title: "Game History", short: "History",
+    right: { label: "View Gameplay Analysis", cls: "hot", onClick: () => nav.push(analysisPage()) },
     render(el, page) {
       let games = [];
       const draw = () => {
@@ -83,7 +84,7 @@ function historyRoot() {
           <button class="btn sync">${games.length ? "Check for new games" : "Import my games"}</button>`;
         if (games.length) {
           const s = { w: 0, l: 0, d: 0 }; games.forEach(g => s[resultFor(g, user)]++);
-          h += row({ title: "Biggest holes in my game", sub: "Engine review of your recent games", attrs: 'data-a="report"' }) +
+          h += row({ title: "Custom report", sub: "Pick how many games to review", attrs: 'data-a="report"' }) +
             row({ title: "Openings I play", sub: "Your results by opening", attrs: 'data-a="openings"' });
           h += `<div class="note">${games.length} games · ${s.w} won, ${s.l} lost, ${s.d} drawn</div>`;
           let month = "";
@@ -226,6 +227,147 @@ function openingsPage(games) {
       const list = Object.entries(stats).sort((a, b) => b[1].n - a[1].n);
       el.innerHTML = `<div class="note">Win rate by opening, all imported games</div>` + list.map(([k, s]) =>
         row({ title: k, sub: `${s.n} games · ${s.w}W ${s.l}L ${s.d}D`, val: Math.round((s.w + s.d / 2) / s.n * 100) + "%", go: false, cls: "static" })).join("");
+    } };
+}
+
+/* ---------- gameplay analysis: the written report, refreshed with new games ---------- */
+// The first report was made from 270 games and saved with the site (data/analysis/<user>.json).
+// Each refresh reviews the rapid and blitz games played since the last report and compares.
+const HOLE_NAME = k => MOTIFS[k]?.name || k;
+const snapsKey = () => "snapshots:" + me().toLowerCase();
+async function loadSnaps() { return (await idb.get("kv", snapsKey()).catch(() => null)) || []; }
+async function loadBaseline() {
+  const r = await fetch(`data/analysis/${me().toLowerCase()}.json`).catch(() => null);
+  return r && r.ok ? r.json() : null;
+}
+function slimReport(rep) {
+  return { games: rep.games, wins: rep.wins, losses: rep.losses, draws: rep.draws, accuracy: rep.accuracy,
+    errorsPerGame: rep.errors / Math.max(1, rep.games), thrown: rep.thrown, timeTrouble: rep.timeTrouble, errors: rep.errors,
+    matedGames: rep.matedGames, timeLosses: rep.timeLosses,
+    holes: rep.holes.map(h => ({ key: h.key, n: h.n, perGame: h.perGame, score: h.score })),
+    phases: rep.phases.map(p => ({ key: p.key, acc: p.acc, errPerGame: p.errPerGame })),
+    examples: Object.fromEntries(Object.entries(rep.examples).map(([k, v]) => [k, v.slice(0, 3).map(e => ({ key: rep.keys[e.gi], ply: e.ply }))])) };
+}
+// a change of 20% or more either way counts; anything smaller is standing still
+function trend(before, now, n) {
+  if (n < 8) return { cls: "na", word: "Too few games" };
+  if (before < 0.02 && now < 0.02) return { cls: "up", word: "Rare" };
+  if (before < 0.02) return { cls: "down", word: "New problem" };
+  const r = now / before;
+  return r <= 0.8 ? { cls: "up", word: "Improving" } : r >= 1.2 ? { cls: "down", word: "Worse" } : { cls: "flat", word: "Stagnating" };
+}
+function verdictOf(prev, cur) {
+  const top = prev.holes.slice(0, 3).map(h => h.key);
+  const nowPer = Object.fromEntries(cur.holes.map(h => [h.key, h.perGame]));
+  const t = top.map(k => trend(prev.holes.find(h => h.key === k).perGame, nowPer[k] || 0, cur.games).cls);
+  const e = trend(prev.errorsPerGame, cur.errorsPerGame, cur.games).cls;
+  const ups = t.filter(x => x === "up").length + (e === "up"), downs = t.filter(x => x === "down").length + (e === "down");
+  if (cur.games < 8) return { cls: "na", word: "Not enough new games yet", sub: `Only ${cur.games} new rapid or blitz game${cur.games === 1 ? "" : "s"}. Play at least 8 for a fair comparison.` };
+  if (ups >= 2 && downs === 0) return { cls: "up", word: "You're learning your lessons", sub: "Your biggest holes are showing up less often than in the last report." };
+  if (downs >= 2) return { cls: "down", word: "Slipping", sub: "Your biggest holes are showing up more often than before. Go back to the drills for the ones marked Worse." };
+  return { cls: "flat", word: "Stagnating", sub: "Your error rates are about the same as last time. Keep at the drills for the holes marked Stagnating." };
+}
+
+function analysisPage() {
+  return { title: "Gameplay Analysis", short: "Analysis",
+    render(el) {
+      let base = null, snaps = [], busy = false;
+      const draw = () => {
+        if (!base) { el.innerHTML = `<div class="empty">No report yet<p>Tap Refresh to review your recent games.</p></div><button class="btn refresh">Refresh analysis</button>`; return; }
+        const latest = snaps[snaps.length - 1];
+        const prev = snaps.length > 1 ? snaps[snaps.length - 2].report : base.overall;
+        const cur = latest ? latest.report : base.overall;
+        const fmtD = t => new Date(t).toLocaleDateString([], { month: "short", day: "numeric", year: "numeric" });
+        let h = "";
+        if (latest) {
+          const v = latest.verdict;
+          h += `<div class="verdict"><div class="k">Since ${snaps.length > 1 ? "your last refresh" : "the first report"} · ${latest.report.games} new games</div>
+            <div class="v ${v.cls}">${esc(v.word)}</div><p>${esc(v.sub)}</p></div>`;
+        } else h += `<div class="prose"><p>${esc(base.bottomLine)}</p></div>`;
+        h += `<button class="btn refresh">${busy ? "Working…" : "Refresh analysis"}</button>
+          <div class="note">Pulls your newest games from chess.com, reviews the rapid and blitz games played since ${latest ? fmtD(latest.lastGameEnd * 1000) : fmtD(base.lastGameEnd * 1000)}, and compares them with the report before.</div><div class="work"></div>`;
+        h += `<div class="stat"><div><b>${cur.games}</b><i>games</i></div><div><b>${Math.round(cur.wins / Math.max(1, cur.games) * 100)}%</b><i>won</i></div><div><b>${cur.accuracy ?? "–"}%</b><i>accuracy</i></div><div><b>${cur.errorsPerGame.toFixed(1)}</b><i>errors/game</i></div></div>`;
+        // comparison table
+        if (latest) {
+          const keys = [...new Set([...prev.holes.slice(0, 5).map(x => x.key), ...cur.holes.slice(0, 3).map(x => x.key)])];
+          const pg = (rep, k) => rep.holes.find(x => x.key === k)?.perGame || 0;
+          h += sec("Are the holes closing?") + `<table class="cmp"><tr><th>Hole</th><th>Before</th><th>Now</th><th></th></tr>` +
+            `<tr><td>All big errors</td><td>${prev.errorsPerGame.toFixed(2)}</td><td>${cur.errorsPerGame.toFixed(2)}</td><td><span class="pill ${trend(prev.errorsPerGame, cur.errorsPerGame, cur.games).cls}">${trend(prev.errorsPerGame, cur.errorsPerGame, cur.games).word}</span></td></tr>` +
+            keys.map(k => { const b = pg(prev, k), n = pg(cur, k), t = trend(b, n, cur.games); return `<tr><td>${esc(HOLE_NAME(k))}</td><td>${b.toFixed(2)}</td><td>${n.toFixed(2)}</td><td><span class="pill ${t.cls}">${t.word}</span></td></tr>`; }).join("") +
+            `</table><div class="note">Errors per game. Improving means at least 20% less often than in the report before; Worse means 20% more.</div>`;
+        }
+        // the holes
+        h += sec(latest ? "Biggest holes now" : "Biggest holes");
+        if (!latest) h += `<div class="prose"><p>${esc(base.habit)}</p></div>`;
+        const maxS = Math.max(1e-9, ...cur.holes.slice(0, 6).map(x => x.score));
+        for (const x of cur.holes.slice(0, 6)) {
+          const m = MOTIFS[x.key] || {};
+          const exBase = !latest ? (base.examples[x.key] || []) : [];
+          const exNew = latest ? (latest.report.examples?.[x.key] || []) : [];
+          h += `<div class="hole"><b>${esc(HOLE_NAME(x.key))}</b> <span style="color:var(--muted);font-size:12px">${x.n}× · ${x.perGame.toFixed(2)} per game</span>
+            <div class="bar"><div style="width:${x.score / maxS * 100}%"></div></div><p>${esc(m.why || "")}</p>
+            ${m.drill ? `<span class="train" data-drill="${m.drill}">Train: ${esc(DRILLS[m.drill]?.name || m.drill)}</span>` : ""}
+            ${exNew.map((e, k) => `<span class="train" data-key="${esc(e.key)}" data-ply="${e.ply}">Example ${k + 1}</span>`).join("")}
+            ${exBase.map(e => `<br><a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.label)}</a>`).join("")}</div>`;
+        }
+        if (!latest) h += `<ul class="bullets">${base.notes.map(n => `<li>${esc(n)}</li>`).join("")}</ul>`;
+        h += sec("By phase of the game");
+        const pn = { opening: "Opening", middlegame: "Middlegame", endgame: "Endgame" };
+        h += `<table class="cmp"><tr><th>Phase</th><th>Accuracy</th><th>Errors/game</th></tr>` + cur.phases.map(p => `<tr><td>${pn[p.key]}</td><td>${p.acc ?? "–"}%</td><td>${p.errPerGame.toFixed(2)}</td></tr>`).join("") + `</table>`;
+        h += sec("Openings, last 12 months (first report)") + `<table class="cmp"><tr><th>Opening</th><th>Side</th><th>Games</th><th>Score</th></tr>` +
+          base.openings.map(o => `<tr><td>${esc(o[0])}</td><td>${o[1]}</td><td>${o[2]}</td><td>${o[4]}%</td></tr>`).join("") + `</table>` +
+          `<ul class="bullets">${base.openingNotes.map(n => `<li>${esc(n)}</li>`).join("")}</ul>`;
+        h += sec("Clock") + `<ul class="bullets">${base.clock.map(n => `<li>${esc(n)}</li>`).join("")}</ul>`;
+        if (latest) h += `<div class="note">This refresh: ${latest.report.timeTrouble} of ${latest.report.errors} big errors with under 10% of the clock; ${latest.report.timeLosses} of ${latest.report.losses} losses on time, ${latest.report.matedGames} by checkmate.</div>`;
+        h += sec("Training plan") + `<ol class="plan">${base.plan.map(([a, b]) => `<li><b>${esc(a)}</b>${esc(b)}</li>`).join("")}</ol>`;
+        h += sec("Report history") + row({ title: "First report", sub: `${base.overall.games} games · ${base.overall.errorsPerGame.toFixed(2)} errors/game · accuracy ${base.overall.accuracy}%`, val: base.made, go: false, cls: "static" }) +
+          snaps.slice().reverse().map(sn => row({ title: sn.verdict.word, sub: `${sn.report.games} new games · ${sn.report.errorsPerGame.toFixed(2)} errors/game · accuracy ${sn.report.accuracy ?? "–"}%`, val: fmtD(sn.at), go: false, cls: "static" })).join("");
+        h += `<div class="note">${esc(base.sample)} Weighting: recent games count most, rapid over blitz over bullet, checkmate losses extra, time losses less.</div>`;
+        el.innerHTML = h;
+      };
+
+      async function refresh() {
+        if (busy) return; busy = true; draw();
+        const work = el.querySelector(".work");
+        const say = t => work.innerHTML = `<div class="progress"><div style="width:${t.pct || 0}%"></div><span>${esc(t.text)}</span></div>`;
+        try {
+          say({ text: "Getting your newest games…" });
+          let games;
+          try { games = await fetchChessCom(me(), (i, n) => say({ text: `chess.com: month ${i + 1} of ${n}`, pct: (i + 1) / n * 100 })); }
+          catch { try { games = await fetchFromRepo(me()); } catch { games = await loadHistory(); } }
+          const lc = me().toLowerCase();
+          const prevSnap = snaps[snaps.length - 1];
+          const since = prevSnap ? prevSnap.lastGameEnd : (base?.lastGameEnd || 0);
+          const pool = games.filter(g => [g.white, g.black].some(n => n.toLowerCase() === lc) && g.plies >= 10 && !/^Bullet/.test(timeControlName(g.timeControl)) && (g.end || 0) > since)
+            .sort((a, b) => (b.end || 0) - (a.end || 0));
+          if (!pool.length) { work.innerHTML = `<div class="note" style="color:var(--rank)">No new rapid or blitz games since the last report. Play a few and refresh again.</div>`; busy = false; el.querySelector(".refresh").textContent = "Refresh analysis"; return; }
+          const pick = pool.slice(0, 50), reviews = [];
+          for (let i = 0; i < pick.length; i++) {
+            reviews.push(await reviewGame(pick[i], { depth: 11, onProgress: (k, m) => say({ text: `Reviewing game ${i + 1} of ${pick.length}`, pct: (i + k / m) / pick.length * 100 }) }).catch(() => null));
+          }
+          const rep = buildReport(pick, reviews, me()); rep.keys = pick.map(g => g.key);
+          const report = slimReport(rep);
+          const prev = prevSnap ? prevSnap.report : base?.overall;
+          if (!prev) { // no saved first report for this player: this refresh becomes it
+            base = { made: new Date().toISOString().slice(0, 10), lastGameEnd: Math.max(...pool.map(g => g.end || 0)), overall: report, sample: `${pick.length} most recent rapid and blitz games, Stockfish 18 at depth 11.`,
+              bottomLine: "Your first report. Refresh after more games to see whether the holes are closing.", habit: "", examples: {}, notes: [], openings: [], openingNotes: [], clock: [], plan: [] };
+            await idb.set("kv", snapsKey() + ":base", base);
+            busy = false; draw(); return;
+          }
+          snaps.push({ at: Date.now(), lastGameEnd: Math.max(...pool.map(g => g.end || 0)), report, verdict: verdictOf(prev, report), reviewed: pick.length, newGames: pool.length });
+          await idb.set("kv", snapsKey(), snaps);
+        } catch (e) { toast("Refresh failed: " + (e.message || e)); }
+        busy = false; draw();
+      }
+
+      el.addEventListener("click", async e => {
+        if (e.target.classList.contains("refresh")) return refresh();
+        const d = e.target.dataset;
+        if (d.drill) { nav.setTab("drills"); nav.popToRoot(); setTimeout(() => nav.push(drillIntro("theme", d.drill, "mine")), 50); }
+        if (d.key) { const g = (await loadHistory()).find(x => x.key === d.key); if (g) nav.push(viewerPage(g, { ply: +d.ply + 1 })); }
+      });
+      el.innerHTML = `<div class="empty"><span class="spin"></span></div>`;
+      Promise.all([loadBaseline(), loadSnaps(), idb.get("kv", snapsKey() + ":base").catch(() => null)]).then(([b, s, local]) => { base = b || local; snaps = s; draw(); });
     } };
 }
 

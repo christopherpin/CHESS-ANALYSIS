@@ -1,0 +1,415 @@
+{
+ "user": "christopher_pin",
+ "made": "2026-11-14",
+ "lastGameEnd": 1788745733,
+ "sample": "150 most recent rapid games (Dec 2023 to Sep 2026) and 120 most recent blitz games (Jul to Aug 2026), Stockfish 18 at depth 12. Bullet left out.",
+ "overall": {
+  "games": 270,
+  "wins": 142,
+  "losses": 117,
+  "draws": 11,
+  "accuracy": 86,
+  "errorsPerGame": 1.667,
+  "thrown": 24,
+  "timeTrouble": 33,
+  "errors": 450,
+  "matedGames": 40,
+  "timeLosses": 17,
+  "holes": [
+   {
+    "key": "missedThreat",
+    "n": 132,
+    "perGame": 0.489,
+    "score": 0.5087
+   },
+   {
+    "key": "hung",
+    "n": 99,
+    "perGame": 0.367,
+    "score": 0.339
+   },
+   {
+    "key": "missedTactic",
+    "n": 78,
+    "perGame": 0.289,
+    "score": 0.2913
+   },
+   {
+    "key": "missedFree",
+    "n": 36,
+    "perGame": 0.133,
+    "score": 0.1126
+   },
+   {
+    "key": "allowedFork",
+    "n": 35,
+    "perGame": 0.13,
+    "score": 0.1099
+   },
+   {
+    "key": "missedFork",
+    "n": 30,
+    "perGame": 0.111,
+    "score": 0.0966
+   },
+   {
+    "key": "backRank",
+    "n": 16,
+    "perGame": 0.059,
+    "score": 0.0652
+   },
+   {
+    "key": "missedMate",
+    "n": 15,
+    "perGame": 0.056,
+    "score": 0.0496
+   },
+   {
+    "key": "allowedMate",
+    "n": 8,
+    "perGame": 0.03,
+    "score": 0.0337
+   },
+   {
+    "key": "missedMate1",
+    "n": 1,
+    "perGame": 0.004,
+    "score": 0.0027
+   }
+  ],
+  "phases": [
+   {
+    "key": "opening",
+    "acc": 88,
+    "errPerGame": 0.27
+   },
+   {
+    "key": "middlegame",
+    "acc": 84,
+    "errPerGame": 1.096
+   },
+   {
+    "key": "endgame",
+    "acc": 90,
+    "errPerGame": 0.3
+   }
+  ]
+ },
+ "rapid": {
+  "games": 150,
+  "wins": 79,
+  "losses": 65,
+  "draws": 6,
+  "accuracy": 87,
+  "errorsPerGame": 1.6,
+  "thrown": 9,
+  "timeTrouble": 5,
+  "errors": 240,
+  "matedGames": 23,
+  "timeLosses": 6,
+  "holes": [
+   {
+    "key": "missedThreat",
+    "n": 77,
+    "perGame": 0.513,
+    "score": 0.5589
+   },
+   {
+    "key": "missedTactic",
+    "n": 57,
+    "perGame": 0.38,
+    "score": 0.3523
+   },
+   {
+    "key": "hung",
+    "n": 41,
+    "perGame": 0.273,
+    "score": 0.2735
+   },
+   {
+    "key": "allowedFork",
+    "n": 16,
+    "perGame": 0.107,
+    "score": 0.0907
+   },
+   {
+    "key": "missedFork",
+    "n": 14,
+    "perGame": 0.093,
+    "score": 0.0875
+   },
+   {
+    "key": "missedFree",
+    "n": 13,
+    "perGame": 0.087,
+    "score": 0.072
+   },
+   {
+    "key": "backRank",
+    "n": 8,
+    "perGame": 0.053,
+    "score": 0.0646
+   },
+   {
+    "key": "missedMate",
+    "n": 8,
+    "perGame": 0.053,
+    "score": 0.0555
+   },
+   {
+    "key": "allowedMate",
+    "n": 6,
+    "perGame": 0.04,
+    "score": 0.0413
+   }
+  ],
+  "phases": [
+   {
+    "key": "opening",
+    "acc": 88,
+    "errPerGame": 0.273
+   },
+   {
+    "key": "middlegame",
+    "acc": 84,
+    "errPerGame": 1
+   },
+   {
+    "key": "endgame",
+    "acc": 90,
+    "errPerGame": 0.327
+   }
+  ]
+ },
+ "blitz": {
+  "games": 120,
+  "wins": 63,
+  "losses": 52,
+  "draws": 5,
+  "accuracy": 86,
+  "errorsPerGame": 1.75,
+  "thrown": 15,
+  "timeTrouble": 28,
+  "errors": 210,
+  "matedGames": 17,
+  "timeLosses": 11,
+  "holes": [
+   {
+    "key": "hung",
+    "n": 58,
+    "perGame": 0.483,
+    "score": 0.4645
+   },
+   {
+    "key": "missedThreat",
+    "n": 55,
+    "perGame": 0.458,
+    "score": 0.4124
+   },
+   {
+    "key": "missedFree",
+    "n": 23,
+    "perGame": 0.192,
+    "score": 0.1905
+   },
+   {
+    "key": "missedTactic",
+    "n": 21,
+    "perGame": 0.175,
+    "score": 0.1742
+   },
+   {
+    "key": "allowedFork",
+    "n": 19,
+    "perGame": 0.158,
+    "score": 0.1467
+   },
+   {
+    "key": "missedFork",
+    "n": 16,
+    "perGame": 0.133,
+    "score": 0.114
+   },
+   {
+    "key": "backRank",
+    "n": 8,
+    "perGame": 0.067,
+    "score": 0.0665
+   },
+   {
+    "key": "missedMate",
+    "n": 7,
+    "perGame": 0.058,
+    "score": 0.0382
+   },
+   {
+    "key": "allowedMate",
+    "n": 2,
+    "perGame": 0.017,
+    "score": 0.0192
+   },
+   {
+    "key": "missedMate1",
+    "n": 1,
+    "perGame": 0.008,
+    "score": 0.008
+   }
+  ],
+  "phases": [
+   {
+    "key": "opening",
+    "acc": 87,
+    "errPerGame": 0.267
+   },
+   {
+    "key": "middlegame",
+    "acc": 83,
+    "errPerGame": 1.217
+   },
+   {
+    "key": "endgame",
+    "acc": 90,
+    "errPerGame": 0.267
+   }
+  ]
+ },
+ "bottomLine": "Your games are decided in the middlegame. You make about 1.1 big errors per game between moves 11 and 30, versus about 0.3 in the opening and 0.3 in the endgame.",
+ "habit": "What ties the top three together is one habit: no blunder check before you move. Before each move ask, in order: what did their last move threaten, what does my move leave undefended, and do I have a check or capture that wins something?",
+ "examples": {
+  "missedThreat": [
+   {
+    "url": "https://www.chess.com/game/live/174106262488",
+    "label": "Sep 7, 24. f4 (needed 24. Rc4)"
+   }
+  ],
+  "hung": [
+   {
+    "url": "https://www.chess.com/game/live/174085798210",
+    "label": "Sep 6, 20...Bxc4 (needed 20...Nf5)"
+   }
+  ],
+  "missedTactic": [
+   {
+    "url": "https://www.chess.com/game/live/174057857120",
+    "label": "Sep 6, 39. Qd4+ (missed 39. Qd6+)"
+   }
+  ],
+  "allowedFork": [
+   {
+    "url": "https://www.chess.com/game/live/174105424066",
+    "label": "Sep 7, 8...Bg4 (needed 8...Nbd7)"
+   }
+  ],
+  "missedFree": [
+   {
+    "url": "https://www.chess.com/game/live/174011322446",
+    "label": "Sep 5, 10. a3 (missed 10. Bxc4)"
+   }
+  ],
+  "backRank": [
+   {
+    "url": "https://www.chess.com/game/live/173962644298",
+    "label": "Sep 4, 25. Ke1 (needed 25. Kc2)"
+   }
+  ]
+ },
+ "notes": [
+  "Of the 40 games where you got checkmated, 15 had a blunder in your last four moves. The rest were slow king-safety collapses: the same 'didn't see the threat' hole near your king.",
+  "When your opponent makes a mistake, you punish it right away only 58% of the time.",
+  "You left your queen en prise 15 times in 270 games. Hanging pieces skew to bishops (24) and knights (18).",
+  "24 of 270 games (9%): you were clearly winning and didn't win."
+ ],
+ "openings": [
+  [
+   "Caro-Kann Defense",
+   "Black",
+   397,
+   "202-181-14",
+   53
+  ],
+  [
+   "Englund Gambit (you play 1...e5 vs 1.d4)",
+   "Black",
+   110,
+   "51-55-4",
+   48
+  ],
+  [
+   "Queen's Gambit Accepted",
+   "White",
+   98,
+   "54-38-6",
+   58
+  ],
+  [
+   "Queen's Gambit Declined",
+   "White",
+   93,
+   "49-40-4",
+   55
+  ],
+  [
+   "Queen's Pawn, other",
+   "White",
+   91,
+   "48-41-2",
+   54
+  ],
+  [
+   "Facing the Englund Gambit",
+   "White",
+   53,
+   "24-29-0",
+   45
+  ],
+  [
+   "Catalan, Closed",
+   "White",
+   50,
+   "27-21-2",
+   56
+  ],
+  [
+   "Slav Defense (all lines)",
+   "White",
+   45,
+   "14-28-3",
+   34
+  ],
+  [
+   "Modern Defense (1...g6)",
+   "White",
+   17,
+   "4-12-1",
+   26
+  ]
+ ],
+ "openingNotes": [
+  "Englund Gambit as Black is unsound and scores under 50% for you. Keep it for bullet and pick a solid reply to 1.d4 for rapid.",
+  "Facing the Englund as White you score 45%: learn the refutation once (Drills, Openings, Englund Gambit).",
+  "Slav (34%) and Modern (26%) are your two worst White results. Drill those opening sets."
+ ],
+ "clock": [
+  "Rapid: 6 losses on time, and only 5 big errors with under 10% of the clock left.",
+  "Blitz: 11 losses on time, and 28 of 210 big errors in crunch time.",
+  "Bullet: 854 of 1,642 losses (52%) were on time. Weighted down, as speed more than skill."
+ ],
+ "plan": [
+  [
+   "Warm-up, 10 min",
+   "Puzzles, Rated. Set your rating to your chess.com puzzle rating first (peak 1486)."
+  ],
+  [
+   "Main block, 15 min",
+   "One drill a day. Week 1: Hanging pieces, Defensive moves. Week 2: Forks, Discovered attacks. Week 3: Middlegame tactics, Back-rank mate. Week 4: Pawn endgames, Mate in 2."
+  ],
+  [
+   "Cool-down, 5 min",
+   "Review one recent rapid loss. Find the first ?? and ask which blunder-check question would have caught it."
+  ],
+  [
+   "Once this week",
+   "Drills, Openings: Englund Gambit, Slav Defense, Modern Defense, 20 puzzles each."
+  ]
+ ]
+}
