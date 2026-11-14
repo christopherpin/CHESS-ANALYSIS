@@ -1,6 +1,6 @@
 # Chess Analysis
 
-A free, phone-friendly chess trainer in the style of the old iPod app. Live at
+A free, phone-friendly chess trainer styled to match the IPOD site. Live at
 https://christopherpin.github.io/CHESS-ANALYSIS/
 
 - **History**: imports your chess.com games (public API), reviews them with Stockfish in the browser,

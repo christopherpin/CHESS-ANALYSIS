@@ -1,1 +1,1 @@
-{"name":"Chess Trainer","short_name":"Chess","start_url":"./","display":"standalone","background_color":"#262421","theme_color":"#6d84a2","icons":[{"src":"icon-180.png","sizes":"180x180","type":"image/png"},{"src":"icon.svg","sizes":"any","type":"image/svg+xml"}]}
+{"name":"Chess Trainer","short_name":"Chess","start_url":"./","display":"standalone","background_color":"#0b0b0c","theme_color":"#0b0b0c","icons":[{"src":"icon-180.png","sizes":"180x180","type":"image/png"},{"src":"icon.svg","sizes":"any","type":"image/svg+xml"}]}

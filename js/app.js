@@ -411,7 +411,7 @@ nav = createNav({
   tabs: [
     { key: "history", label: "History", root: historyRoot() },
     { key: "saved", label: "Saved", root: savedRoot() },
-    { key: "drills", label: "Drills", root: drillsRoot() },
+    { key: "drills", label: "Drills", root: drillsRoot(), sep: true },
     { key: "puzzles", label: "Puzzles", root: puzzlesRoot() },
   ],
   initial: pref.get("tab", "history"),

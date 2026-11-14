@@ -1,22 +1,11 @@
 // iPod-style navigation: one stack of pages per tab, pages slide in from the right.
 export const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 
-const ICONS = {
-  history: '<path d="M15 2.5A12.5 12.5 0 1 0 27.5 15 12.5 12.5 0 0 0 15 2.5zm0 3A9.5 9.5 0 1 1 5.5 15 9.5 9.5 0 0 1 15 5.5zM13.6 8v8.2l6.6 4 1.4-2.3-5.1-3V8z" fill-rule="evenodd"/>',
-  saved: '<path d="M6 2h18v26l-9-6-9 6z"/>',
-  drills: '<path d="M11 3h8v3h-1.6l1.4 4.4a6.5 6.5 0 0 1-2.2 7.1l3.4 6.5H24v4H6v-4h4l3.4-6.5a6.5 6.5 0 0 1-2.2-7.1L12.6 6H11z"/>',
-  puzzles: '<path d="M4 9h6a3 3 0 1 1 6 0h6v6a3 3 0 1 0 0 6v6h-6a3 3 0 1 0-6 0H4v-6a3 3 0 1 1 0-6z"/>',
-};
-
 export function createNav({ root, tabs, initial }) {
   root.innerHTML = `
-  <svg width="0" height="0" style="position:absolute"><defs>
-    <linearGradient id="gBlue" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fd8ff"/><stop offset=".5" stop-color="#29a6f7"/><stop offset=".5" stop-color="#1688e6"/><stop offset="1" stop-color="#0d6ed1"/></linearGradient>
-    <linearGradient id="gGrey" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a8a8a8"/><stop offset="1" stop-color="#6b6b6b"/></linearGradient>
-  </defs></svg>
   <header class="nav"><div class="nav-in"><div class="back hidden"><span></span></div><div class="title"></div><div class="navbtn hidden"></div></div></header>
   <main class="pages"></main>
-  <nav class="tabs">${tabs.map(t => `<div class="tab" data-tab="${t.key}"><svg viewBox="0 0 30 30">${ICONS[t.icon || t.key]}</svg>${t.label}</div>`).join("")}</nav>`;
+  <nav class="tabs">${tabs.map((t, i) => (t.sep ? '<span class="sep"></span>' : "") + `<div class="tab" data-tab="${t.key}" data-label="${t.label}">${t.label}</div>`).join("")}</nav>`;
   const pagesEl = root.querySelector(".pages"), titleEl = root.querySelector(".title"), backEl = root.querySelector(".back"), btnEl = root.querySelector(".navbtn");
   const stacks = {};
   let cur = null;
